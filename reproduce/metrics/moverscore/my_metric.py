@@ -37,12 +37,10 @@ def print_moverscore_score(output_fname='moverscore.csv'):
         idf_dict_hyp = get_idf_dict(summaries) # idf_dict_hyp = defaultdict(lambda: 1.)
         idf_dict_ref = get_idf_dict(refs) # idf_dict_ref = defaultdict(lambda: 1.)
 
-        scores = word_mover_score(references, summaries, idf_dict_ref, idf_dict_hyp, \
+        scores = word_mover_score(refs, summaries, idf_dict_ref, idf_dict_hyp, \
                             stop_words=[], n_gram=1, remove_subwords=True)
 
-        P, R, F1 = score(summaries, refs, lang="en")
-        
-        data_dict = {'bertscore_p':P,'bertscore_r':R,'bertscore_f1':F1}
+        data_dict = {'moverscore':scores}
         output_each_path = os.path.join(summ_home_path, v, output_fname)
         df = pd.DataFrame(data_dict)
         df.to_csv(output_each_path, index=False)
